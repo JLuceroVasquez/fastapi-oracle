@@ -1,16 +1,14 @@
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Identity, Column, Integer, String, ForeignKey
-from sqlalchemy.sql.sqltypes import TIMESTAMP
-from sqlalchemy import func
+from sqlalchemy import Identity, Column, Integer, String
 
 
 class Base(DeclarativeBase):
     pass
 
-class Todos(Base):
-    __tablename__ = "todos"
+class TestTable(Base):
+    __tablename__ = "test_table"
 
     id_identity = Identity(start=1, increment=1)
     id =Column(Integer, id_identity, primary_key=True)
 
-    description = Column(String(50), nullable=False)
+    test_column1 = Column(String(50), unique=True, nullable=False)
