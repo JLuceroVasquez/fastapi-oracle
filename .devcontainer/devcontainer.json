@@ -1,0 +1,35 @@
+{
+    // Nombre descriptivo del entorno en el panel de Codespaces
+    "name": "Python 3.12 Oracle Project",
+
+    // Imagen base oficial de Microsoft optimizada para Python 3.12
+    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    
+    "customizations": {
+        "vscode": {
+            // Lista de extensiones que se instalarán automáticamente en el navegador/editor
+            "extensions": [
+                "ms-python.python", // Soporte de Python
+                "ms-python.vscode-pylance", // Inteligencia de código, da autocompletado inteligente, chequea errores en tiempo real y permite "saltar" a la definición de funciones
+                "njpwerner.autodocstring", // Documentación automática, si escribes """ y pulsas Enter, genera automáticamente la plantilla de documentación para tus funciones
+            ],
+            // Configuración interna de VS Code para este contenedor
+            "settings": {
+                // Indica a VS Code dónde buscar las librerías instaladas
+                "python.defaultInterpreterPath": ".venv/bin/python", 
+                // Añade la carpeta 'app' al motor de análisis para evitar errores de importación. En teoría no es necesaria si se configura correctamente la variable de entorno PYTHONPATH. Sin embargo, se mantuvo para evitar la frustración de ver errores en el código
+                "python.analysis.extraPaths": ["./app"]
+            }
+        }
+    },
+    // Comando que se ejecuta automáticamente tras crear el contenedor. 
+    // Crea un entorno virtual con la imagen python:3.12
+    // Instala las librerías listadas en tu archivo de requerimientos.
+    "postCreateCommand": "python -m venv .venv && .venv/bin/python -m pip install -r requirements.txt",
+
+    // Define variables de entorno del sistema operativo dentro del contenedor
+    "containerEnv": {
+        // Asegura que Python reconozca la raíz del proyecto para importar módulos
+        "PYTHONPATH": "${containerWorkspaceFolder}"
+    }
+}
