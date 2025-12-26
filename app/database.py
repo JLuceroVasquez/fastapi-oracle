@@ -18,8 +18,8 @@ dsn = settings.ORACLE_DB_DSN
 engine = create_engine(
     f"oracle+oracledb://{username}:{password}@{dsn}",
     pool_pre_ping=True,      # Verifica si la conexión sigue viva antes de usarla
-    pool_size=5,             # Conexiones base mantenidas: 3 conexiones base
-    max_overflow=10,         # Conexiones adicionales en caso de alta demanda: 5 extras (total 8)
+    pool_size=3,             # Conexiones base mantenidas: 3 conexiones base
+    max_overflow=5,         # Conexiones adicionales en caso de alta demanda: 5 extras (total 8)
     pool_recycle=1800        # Cierra conexiones inactivas cada 30 min para liberar recursos
     )
 
