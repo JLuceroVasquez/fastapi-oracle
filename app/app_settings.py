@@ -15,6 +15,10 @@ class Settings(BaseSettings):
     ORACLE_DB_PASSWORD: str
     ORACLE_DB_DSN: str
 
+    SECRET__KEY: str # openssl rand -hex 32
+    ALGORITHM: str
+    ACCESS_TOKEN_EXPIRATION_MINUTES: int
+
     # 2. CONFIGURACIÓN DEL ORIGEN DE DATOS
     # Indicamos que debe buscar estas variables en un archivo llamado ".env"
     model_config = SettingsConfigDict(env_file=".env")
