@@ -10,7 +10,7 @@ class Base(DeclarativeBase):
 # 2. DEFINICIÓN DE LA TABLA
 class Todos(Base):
     # Nombre exacto que tendrá la tabla en Oracle
-    __tablename__ = "test_table"
+    __tablename__ = "todos"
 
     # 3. CONFIGURACIÓN DE IDENTIDAD (AUTOINCREMENTO)
     # Oracle usa objetos de identidad. Aquí definimos que el ID 

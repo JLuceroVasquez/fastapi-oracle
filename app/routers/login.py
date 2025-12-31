@@ -21,4 +21,4 @@ async def login(db: Annotated[Session, Depends(get_db)], user_credentials: Annot
     
     access_token = oauth2.create_access_token({"username": user.username})
     
-    return {"token_de_acceso": access_token, "tipo_de_token": "bearer"}
+    return {"access_token": access_token, "token_type": "bearer"}

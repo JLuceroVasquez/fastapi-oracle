@@ -1,9 +1,18 @@
-from passlib.context import CryptContext
+from pwdlib import PasswordHash
+from pwdlib.hashers.bcrypt import BcryptHasher
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Configuramos el hasher de forma explícita
+# Esto reemplaza al antiguo pwd_context de passlib
+password_hash = PasswordHash((BcryptHasher(),))
 
 def hash(password: str):
-    return pwd_context.hash(password)
+    """
+    Recibe la contraseña en texto plano y devuelve el hash.
+    """
+    return password_hash.hash(password)
 
-def verify(plain_password: str, hashed_password: str)
-    return pwd_context.verify(plain_password, hashed_password)
+def verify(plain_password: str, hashed_password: str):
+    """
+    Verifica si la contraseña coincide con el hash almacenado.
+    """
+    return password_hash.verify(plain_password, hashed_password)
