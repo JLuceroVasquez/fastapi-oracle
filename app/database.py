@@ -1,7 +1,7 @@
 from app.app_settings import get_settings
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
-from app import database_models
+from sqlalchemy.orm import sessionmaker
+#from app import database_models
 
 # 1. CARGA DE CONFIGURACIÓN
 # Obtenemos las variables de entorno (User, Pass, DSN) validadas por Pydantic
@@ -28,10 +28,10 @@ engine = create_engine(
 # antes de que nosotros decidamos hacer el commit.
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# 4. CREACIÓN DE TABLAS
+# 4. CREACIÓN DE TABLAS (forma manual, se reemplaza con Alambic)
 # Esta línea busca todos los modelos definidos en 'database_models' y crea
 # las tablas en Oracle si aún no existen
-database_models.Base.metadata.create_all(bind=engine)
+#database_models.Base.metadata.create_all(bind=engine)
 
 # 5. GENERADOR DE SESIONES (Dependency Injection)
 # Esta función será utilizada por FastAPI con 'Depends' para dar a cada 
