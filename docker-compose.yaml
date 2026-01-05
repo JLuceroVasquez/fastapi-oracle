@@ -1,8 +1,9 @@
+#Este archivo es inutil en una instancia Oracle 9, debido al uso de PODMAN para emular DOCKER
 version: '3' # Versión del formato de Compose. Es la versión más estable y estándar para despliegues modernos.
 services:
   api: # Nombre del servicio
     image: fastapi-oracle-image # Nombre que se le dará a la imagen generada
     ports:
-      - 8000:80 # Mapeo: Puerto 8000 de tu PC apunta al puerto 80 del contenedor
+      - 8000:8000 # Mapeo: Puerto 8000 de tu PC apunta al puerto 8000 del contenedor
     env_file:
       - .env # ¡ESTA ES LA CLAVE! Inyecta las variables del archivo .env al sistema operativo del contenedor
