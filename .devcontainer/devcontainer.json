@@ -2,34 +2,40 @@
     // Nombre descriptivo del entorno en el panel de Codespaces
     "name": "Python 3.12 Oracle Project",
 
-    // Imagen base oficial de Microsoft optimizada para Python 3.12
-    "image": "mcr.microsoft.com/devcontainers/python:3.12",
+    // Se especifica 'bookworm' para evitar la distribución inestable 'trixie'
+    "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
     
+    // Habilita el uso de comandos Docker dentro de Codespaces
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:1": {
+            "version": "latest",
+            "moby": false // Evita conflictos con el repositorio de Microsoft Moby
+        }
+    },
+
     "customizations": {
         "vscode": {
-            // Lista de extensiones que se instalarán automáticamente en el navegador/editor
             "extensions": [
-                "ms-python.python", // Soporte de Python
-                "ms-python.vscode-pylance", // Inteligencia de código, da autocompletado inteligente, chequea errores en tiempo real y permite "saltar" a la definición de funciones
-                "njpwerner.autodocstring", // Documentación automática, si escribes """ y pulsas Enter, genera automáticamente la plantilla de documentación para tus funciones
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "njpwerner.autodocstring",
+                "ms-azuretools.vscode-docker" // Extensión vital para gestionar tus contenedores visualmente
             ],
-            // Configuración interna de VS Code para este contenedor
             "settings": {
-                // Indica a VS Code dónde buscar las librerías instaladas
-                "python.defaultInterpreterPath": ".venv/bin/python", 
-                // Añade la carpeta 'app' al motor de análisis para evitar errores de importación. En teoría no es necesaria si se configura correctamente la variable de entorno PYTHONPATH. Sin embargo, se mantuvo para evitar la frustración de ver errores en el código
-                "python.analysis.extraPaths": ["./app"]
+                "python.defaultInterpreterPath": "{workspaceFolder}/.venv/bin/python",
+                "python.terminal.activateEnvInSelectedInterpreter": true,
+                "python.analysis.extraPaths": ["{workspaceFolder}/app"]
             }
         }
     },
-    // Comando que se ejecuta automáticamente tras crear el contenedor. 
-    // Crea un entorno virtual con la imagen python:3.12
-    // Instala las librerías listadas en tu archivo de requerimientos.
+
+    // El postCreateCommand ahora incluye permisos si fueran necesarios
     "postCreateCommand": "python -m venv .venv && .venv/bin/python -m pip install -r requirements.txt",
 
-    // Define variables de entorno del sistema operativo dentro del contenedor
     "containerEnv": {
-        // Asegura que Python reconozca la raíz del proyecto para importar módulos
         "PYTHONPATH": "${containerWorkspaceFolder}"
-    }
+    },
+
+    // Define el usuario por defecto para evitar problemas de permisos con el socket de Docker
+    "remoteUser": "vscode"
 }
