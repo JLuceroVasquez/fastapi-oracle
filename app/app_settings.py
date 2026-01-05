@@ -21,6 +21,7 @@ class Settings(BaseSettings):
 
     # 2. CONFIGURACIÓN DEL ORIGEN DE DATOS
     # Indicamos que debe buscar estas variables en un archivo llamado ".env"
+    # Si el archivo no existe, busca variables de entorno del sistema operativo.
     model_config = SettingsConfigDict(env_file=".env")
 
 # 3. OPTIMIZACIÓN CON CACHÉ (lru_cache)

@@ -1,5 +1,7 @@
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import Identity, Column, Integer, String, ForeignKey
+from sqlalchemy.sql.sqltypes import TIMESTAMP
+from sqlalchemy import func
 
 # 1. CLASE BASE DECLARATIVA
 # En SQLAlchemy 2.0, heredamos de DeclarativeBase para que esta clase
@@ -27,6 +29,8 @@ class Todos(Base):
 
     owner_username=Column(String(50), ForeignKey("users.username", ondelete="CASCADE"), nullable=False)
 
+    created_at=Column(TIMESTAMP(timezone=True), default=func.current_timestamp())
+
 class Users(Base):
     # Nombre exacto que tendrá la tabla en Oracle
     __tablename__ = "users"
@@ -43,3 +47,5 @@ class Users(Base):
 
     username=Column(String(50), unique=True, nullable=False)
     hashed_password=Column(String(100), nullable=False)
+
+    created_at=Column(TIMESTAMP(timezone=True), default=func.current_timestamp())
