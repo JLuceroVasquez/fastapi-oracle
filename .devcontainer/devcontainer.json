@@ -9,7 +9,8 @@
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker:1": {
             "version": "latest",
-            "moby": false // Evita conflictos con el repositorio de Microsoft Moby
+            "moby": false, // Evita conflictos con el repositorio de Microsoft Moby
+            "installDockerBuildx": true // Fuerza la instalación de buildx
         }
     },
 
