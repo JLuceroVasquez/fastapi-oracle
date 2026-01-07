@@ -1,9 +1,10 @@
-#Este archivo es inutil en una instancia Oracle 9, debido al uso de PODMAN para emular DOCKER
-version: '3' # Versión del formato de Compose. Es la versión más estable y estándar para despliegues modernos.
+version: '3.8' # Actualizado a la versión más reciente del formato 3
 services:
-  api: # Nombre del servicio
-    image: fastapi-oracle-image # Nombre que se le dará a la imagen generada
+  api:
+    image: fastapi-oracle-image:latest
+    container_name: fastapi-api  # Nombre fijo para que sea fácil encontrarlo en logs
+    restart: always              # ¡VITAL! Si la API se cae o la RAM falla, Docker la levanta sola
     ports:
-      - 8000:8000 # Mapeo: Puerto 8000 de tu PC apunta al puerto 8000 del contenedor
+      - "8000:8000"
     env_file:
-      - .env # ¡ESTA ES LA CLAVE! Inyecta las variables del archivo .env al sistema operativo del contenedor
+      - .env

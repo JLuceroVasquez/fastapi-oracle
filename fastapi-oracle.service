@@ -1,0 +1,25 @@
+[Unit]
+# Descripción amigable que aparecerá cuando uses 'systemctl status'
+Description=Servicio de API FastAPI en Docker
+# Asegura que este servicio espere a que la red y Docker estén listos antes de arrancar
+After=docker.service
+Requires=docker.service
+
+[Service]
+# Evita que el sistema mate el proceso si tarda un poco en descargar la imagen o iniciar
+TimeoutStartSec=0
+# Si el contenedor falla o la app tiene un error, Linux lo reiniciará automáticamente
+Restart=always
+# ¡CRUCIAL! Aquí debes poner la ruta donde creaste tu docker-compose.yml
+# Systemd "viajará" a esta carpeta antes de ejecutar el comando
+WorkingDirectory=/home/opc/fastapi-oracle
+# El comando para iniciar. 'up' levanta todo lo definido en el .yml
+# Usamos la ruta completa /usr/local/bin/ por seguridad de Systemd
+ExecStart=/usr/bin/docker compose up
+# El comando para detener los contenedores limpiamente al apagar el servicio
+ExecStop=/usr/bin/docker compose down
+
+[Install]
+# Define que este servicio debe arrancar en el modo multi-usuario (el arranque normal)
+# Esto es lo que permite que la API suba sola al encender la instancia ARM
+WantedBy=multi-user.target
